@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+// Obje havuzu, istenilen kadar prefab çeþitlerini istenildiði kadar üretmeyi saðlayan uygulama.
 public class ObjectPool : MonoSingleton<ObjectPool>
 {
     [Serializable]
@@ -46,7 +46,7 @@ public class ObjectPool : MonoSingleton<ObjectPool>
             }
         }
     }
-
+    // Havuzda sýrada ki objeyi çaðirma iþlemleri
     public GameObject GetPooledObject(int objectType)
     {
         if (objectType >= pools.Length)

@@ -12,7 +12,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public GameStates GameState;
 
-    private void Start()
+    private void Start() // Tüm þablon boyutlarýna göre kamera görünümünün ayarlanmasý
     {
         Vector3 CameraXPos = new Vector3(1f + ((3.5f / 7f) * (XValue - 3)), 0.5f + ((2.5f / 7f) * (XValue - 3)), -6f + ((-11f / 7f) * (XValue - 3)));
         Vector3 CameraZPos = new Vector3(1f + ((3.5f / 7f) * (ZValue - 3)), 0.5f + ((2.5f / 7f) * (ZValue - 3)), -6f + ((-11f / 7f) * (ZValue - 3)));

@@ -9,6 +9,7 @@ public class PieceGroups : MonoSingleton<PieceGroups>
 {
     public List<PieceGroupTypes> GroupTypesList = new List<PieceGroupTypes>();
 
+    // 8x8 lik her bir kare için en uygun parça gruplarýný random bir þekilde aliyor. Her birini tek tek kontrol ediyor ve eðer uyumlu hiç bir grup parçasý yoksa null döndürüyor.
     public PieceGroupTypes GetPieceGroupType(int firstPosX, int firstPosZ)
     {
         PieceGroupTypes selectPieceGroupTypes = null;

@@ -5,13 +5,13 @@ using DG.Tweening;
 
 public class ClickControl : MonoBehaviour
 {
-    Piece selectPiece;
     int X;
     int Y;
     Vector3 firstMousePos;
     Vector3 endMousePos;
     bool Active = true;
 
+    //týklanýlan parçanýn baþlangiç bilgileri aliniyor
     public void OnMouseDown()
     {
         if (GameManager.Instance.GameState != GameManager.GameStates.Play)
@@ -23,7 +23,7 @@ public class ClickControl : MonoBehaviour
         X = (int)(transform.position.x);
         Y = (int)(transform.position.y);
     }
-
+    // Burada yapilan iþleme göre hareket sistemi kontrol edilip baþlatiliyor (Yukarý,aþaðý,saða,sola)
     public void OnMouseDrag()
     {
         if (!Active || GameManager.Instance.GameState != GameManager.GameStates.Play)
@@ -64,20 +64,5 @@ public class ClickControl : MonoBehaviour
             }
             Active = false;
         }
-    }
-
-    public void OnMouseUp()
-    {
-        if (GameManager.Instance.GameState != GameManager.GameStates.Play)
-        {
-            return;
-        }
-        GameManager.Instance.GameState = GameManager.GameStates.Wait;
-        Invoke("GameStateChange", 1f);
-    }
-
-    public void GameStateChange()
-    {        
-        GameManager.Instance.GameState = GameManager.GameStates.Play;
     }
 }

@@ -46,6 +46,7 @@ public class Piece
         SelectObject.transform.DOScale(Vector3.zero, 0.25f).SetEase(Ease.InOutBack).From();
     }
 
+    // Eklenilen parçayý etrafinda ki tüm parçalardan çýkartýlýyor. Bunun sebebi yan yana aynisi gelmemesi için.
     public void CheckEdgeTypes()
     {
         for (int i = -1; i <= 1; i++)

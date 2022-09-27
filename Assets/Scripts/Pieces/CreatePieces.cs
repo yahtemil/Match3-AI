@@ -14,7 +14,7 @@ public class CreatePieces : MonoSingleton<CreatePieces>
     private int AllControlCounter;
     private bool AllControlActive;
 
-
+    #region Map Create Operations
     void Awake()
     {
         PieceList = new Piece[GameManager.Instance.XValue, GameManager.Instance.ZValue];
@@ -34,15 +34,12 @@ public class CreatePieces : MonoSingleton<CreatePieces>
         }
         Invoke("CreateMap", 0.1f);
     }
-
-
-
     public void RestartMap()
     {
         ClearMap();
         CreateMap();
     }
-
+    // 
     public void ClearMap()
     {
         for (int i = 0; i < PieceList.GetLength(0); i++)
@@ -54,7 +51,7 @@ public class CreatePieces : MonoSingleton<CreatePieces>
             }
         }
     }
-
+    // Oyunda default 8x8 parçalarýn oluþturulmasý ve pozisyon ayarlarý
     public void CreateMap()
     {
         for (int i = 0; i < PieceList.GetLength(0); i++)
@@ -111,7 +108,10 @@ public class CreatePieces : MonoSingleton<CreatePieces>
             }
         }
     }
+    #endregion
 
+    #region AllMapControl
+    // sonradan düþenlerle birlikte 3 lü olan gruplarý temizlemek için yapilan kontrol
     public void AllMapControl()
     {
         if (AllControlActive)
@@ -132,6 +132,7 @@ public class CreatePieces : MonoSingleton<CreatePieces>
                 if (counter != AllControlCounter)
                 {
                     AllControlActive = false;
+                    GameManager.Instance.GameState = GameManager.GameStates.Play;
                     yield break;
                 }
                 PieceList[i, j].mainSpriteControl.AllControl(i, j, PieceList[i, j].Number);
@@ -142,12 +143,18 @@ public class CreatePieces : MonoSingleton<CreatePieces>
             }
         }
         AllControlActive = false;
+        yield return new WaitForSeconds(0.26f);
+        GameManager.Instance.GameState = GameManager.GameStates.Play;
     }
+    #endregion
 
+    #region MoveSystem
+    //týkladýktan sonra hareket etme islemlerinin yapýlmasý ve kontrol edilmesi
     public void MoveSystem(int X,int Y,int plusX, int plusY)
     {
         if (PieceList.GetLength(0) > X + plusX && X + plusX >= 0 && PieceList.GetLength(1) > Y + plusY && Y + plusY >= 0)
         {
+            GameManager.Instance.GameState = GameManager.GameStates.Wait;
             firstPiece = PieceList[X, Y];
             secondPiece = PieceList[X + plusX, Y + plusY];
             ChangeTwoPieceBetween();
@@ -163,6 +170,7 @@ public class CreatePieces : MonoSingleton<CreatePieces>
                         secondPiece.SelectObject.transform.DOMove(firstPiece.SelectObject.transform.position, 0.25f);
                         firstPiece.SelectObject.transform.DOMove(secondPiece.SelectObject.transform.position, 0.25f);
                         ChangeTwoPieceBetween();
+                        GameManager.Instance.GameState = GameManager.GameStates.Play;
                     }
                 }
             });
@@ -182,4 +190,5 @@ public class CreatePieces : MonoSingleton<CreatePieces>
         firstPiece.Number = piece.Number;
         firstPiece.SelectObject = piece.SelectObject;
     }
+    #endregion
 }
